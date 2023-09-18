@@ -2,4 +2,5 @@
 .idea
 
 # Python / Poetry
+.venv
 dist
