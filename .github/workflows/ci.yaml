@@ -29,3 +29,5 @@ jobs:
         run: poetry install
       - name: Build the project
         run: poetry build
+      - name: flake8 linting
+        run: poetry run flake8
