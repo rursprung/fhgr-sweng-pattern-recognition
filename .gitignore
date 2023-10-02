@@ -4,5 +4,7 @@
 # Python / Poetry
 .venv
 dist
-
 __pycache__
+
+# app
+logfile.csv

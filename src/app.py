@@ -4,6 +4,7 @@ __copyright__ = "Copyright 2023 to Infinity and Beyond, CEDES AG"
 import cv2
 from image_proc.image_proc import ImageProcessor
 from pattern_logger.console_logger import ConsolePatternLogger
+from pattern_logger.csv_logger import CsvPatternLogger
 from visualizer.visualizer import Visualizer
 
 
@@ -13,6 +14,7 @@ class App:
         self.visualizer = Visualizer("MyVis")
         self.loggers = [
             ConsolePatternLogger(),
+            CsvPatternLogger(),
         ]
 
     def run(self):
