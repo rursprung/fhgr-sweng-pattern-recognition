@@ -10,7 +10,7 @@ This project reads a series of images and tries to recognise different patterns 
 The result is logged (both on the console and in a CSV file) as well as visualised in a GUI.
 
 ## Usage
-1. To launch the program run `poetry run python3 -m single_image_proc`
+1. To launch the program run `poetry run python3 -m app_stored_images` in the root of this repository
 2. Press any key to progress to the next image
 3. After the last image the program will terminate
 
