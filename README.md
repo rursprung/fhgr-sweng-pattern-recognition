@@ -6,8 +6,13 @@
 This is a mini-project for the software engineering course of the [FHGR B.Sc. Mobile Robotics](https://fhgr.ch/mr),
 implemented by [Dominic Eicher](https://github.com/Nic822) and [Ralph Ursprung](https://github.com/rursprung).
 
-This project reads an image and tries to recognise different patterns in it, including their colour. The result is
-logged (both on the console and in a CSV file) as well as visualised in a GUI.
+This project reads a series of images and tries to recognise different patterns in it, including their colour.
+The result is logged (both on the console and in a CSV file) as well as visualised in a GUI.
+
+## Usage
+1. To launch the program run `poetry run python3 -m single_image_proc`
+2. Press any key to progress to the next image
+3. After the last image the program will terminate
 
 ## Architecture Overview
 

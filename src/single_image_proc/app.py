@@ -19,8 +19,11 @@ class App:
 
     def run(self):
         try:
-            while True:
-                frame = cv2.imread("assets/test_image.JPG", cv2.IMREAD_COLOR)
+            num_images = 5  # quick-win
+            for i in range(num_images):
+                print(f"processing image {i}")
+
+                frame = cv2.imread(f"assets/test_image{i:02}.jpg", cv2.IMREAD_COLOR)
                 pattern_list = self.image_processor.process(frame)
 
                 for logger in self.loggers:
@@ -28,7 +31,7 @@ class App:
 
                 self.visualizer.visualize(frame, pattern_list)
 
-                if cv2.waitKey(1) & 0xFF == ord("q"):
+                if cv2.waitKey() & 0xFF == ord("q"):
                     break
         except KeyboardInterrupt:
             pass
