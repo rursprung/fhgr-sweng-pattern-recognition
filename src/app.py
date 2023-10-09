@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from image_proc.image_proc import ImageProcessor
-from pattern_logger.console_logger import ConsolePatternLogger
-from pattern_logger.csv_logger import CsvPatternLogger
-from pattern_processor.pattern_filter import PatternFilter
-from visualizer.visualizer import Visualizer
 import cv2
+
+from image_proc.image_proc import ImageProcessor
+from output.pattern_logger.console_logger import ConsolePatternLogger
+from output.pattern_logger.csv_logger import CsvPatternLogger
+from output.tts.tts import TtsPatterns
+from output.visualizer.visualizer import Visualizer
+from pattern_processor.pattern_filter import PatternFilter
 
 
 class App(ABC):
@@ -18,6 +20,7 @@ class App(ABC):
             CsvPatternLogger(),
         ]
         self.visualizer = Visualizer("MyVis")
+        self.tts_patterns = TtsPatterns()
         self._delay = delay
 
     def handle_frame(self, frame: cv2.Mat):
@@ -29,6 +32,7 @@ class App(ABC):
             logger.log(filtered_patterns)
 
         self.visualizer.visualize(frame, pattern_list)
+        self.tts_patterns.patterns_to_speech(filtered_patterns)
 
     def run(self):
         try:

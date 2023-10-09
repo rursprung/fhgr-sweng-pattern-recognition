@@ -1,4 +1,4 @@
-from pattern_logger.pattern_logger import PatternLogger
+from output.pattern_logger.pattern_logger import PatternLogger
 
 
 class ConsolePatternLogger(PatternLogger):
