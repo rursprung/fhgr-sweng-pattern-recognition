@@ -23,19 +23,20 @@ graph LR
     PR -->|"List of Patterns
     (Location, Shape, Colour)"|Viz
     Viz -->|"image with markup"|Screen
-    
+
     PR -->|"List of Patterns
-    (Location, Shape, Colour)"|ConsoleLogger
+    (Location, Shape, Colour)"|PF
+    PF -->|"Filtered List of Patterns (Only New Patterns)"|ConsoleLogger
     ConsoleLogger-->|"Text
     (Log Entries)"|Screen
-    PR -->|"List of Patterns
-    (Location, Shape, Colour)"|CSVLogger
+    PF -->|"Filtered List of Patterns (Only New Patterns)"|CSVLogger
     CSVLogger -->|"CSV
     (Log Entries)"|CSVFile
-    
+
     IL[Image Loader]
     Viz[Visualizer]
     PR[Pattern Recognition]
+    PF[Pattern Filter]
     ConsoleLogger[Console Logger]
     CSVLogger[CSV Logger]
     Screen[[Screen]]

@@ -17,6 +17,17 @@ class Pattern:
         self.contour = contour
         self.color = None
 
+    def __str__(self):
+        return f"{self.name}: {self.contour}" + f" in {self.color}" if self.color is not None else ""
+
+    def __eq__(self, other):
+        """Compare two Pattern objects"""
+        if isinstance(other, Pattern):
+            return self.name == other.name \
+                and np.array_equal(self.contour, other.contour) \
+                and self.color == other.color
+        return False
+
 
 class Detector(ABC):
     @abstractmethod
