@@ -10,7 +10,7 @@ import cv2
 
 
 class App(ABC):
-    def __init__(self):
+    def __init__(self, delay=0):
         self.image_processor = ImageProcessor()
         self.pattern_filter = PatternFilter()
         self.loggers = [
@@ -18,6 +18,7 @@ class App(ABC):
             CsvPatternLogger(),
         ]
         self.visualizer = Visualizer("MyVis")
+        self._delay = delay
 
     def handle_frame(self, frame: cv2.Mat):
         pattern_list = self.image_processor.process(frame)
@@ -39,7 +40,7 @@ class App(ABC):
 
                 self.handle_frame(frame)
 
-                if cv2.waitKey() & 0xFF == ord("q"):
+                if cv2.waitKey(self._delay) & 0xFF == ord("q"):
                     break
         except KeyboardInterrupt:
             pass
