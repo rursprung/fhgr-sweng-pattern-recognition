@@ -1,6 +1,3 @@
-__author__ = "KLSA"
-__copyright__ = "Copyright 2023 to Infinity and Beyond, CEDES AG"
-
 from typing import Optional
 
 import cv2
