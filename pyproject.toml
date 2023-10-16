@@ -8,7 +8,7 @@ packages = [{include = "test", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-opencv-python = "^4.0.76"
+opencv-python = "^4.8.1"
 matplotlib = "^3.8.0"
 
 [tool.poetry.group.dev.dependencies]
