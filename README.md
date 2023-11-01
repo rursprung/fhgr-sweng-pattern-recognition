@@ -28,6 +28,8 @@ it, including their colour.  The result is logged (both on the console and in a 
 
 ```mermaid
 graph LR
+    Image -->|Data|IL
+    Video -->|Data|IL
     IL -->|Image|PR
     IL -->|Image|Viz
     PR -->|"List of Patterns
@@ -42,14 +44,20 @@ graph LR
     PF -->|"Filtered List of Patterns (Only New Patterns)"|CSVLogger
     CSVLogger -->|"CSV
     (Log Entries)"|CSVFile
-
+    
+    PF -->|"Filtered List of Patterns (Only New Patterns)"|TTS
+    TTS -->|"Audio Data"|Audio
+    
     IL[Image Loader]
+    Image[JPEG File]
+    Video[Video Data Stream e.g.: WebCamera]
     Viz[Visualizer]
     PR[Pattern Recognition]
     PF[Pattern Filter]
     ConsoleLogger[Console Logger]
     CSVLogger[CSV Logger]
     Screen[[Screen]]
+    Audio[[Audio System]]
     CSVFile[[CSV File]]
 ```
 
