@@ -19,7 +19,7 @@ class App(ABC):
             ConsolePatternLogger(),
             CsvPatternLogger(),
         ]
-        self.visualizer = Visualizer("MyVis")
+        self.visualizer = Visualizer("Press 'q' to quit")
         self.tts_patterns = TtsPatterns()
         self._delay = delay
 
