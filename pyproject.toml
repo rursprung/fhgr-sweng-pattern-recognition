@@ -4,7 +4,8 @@ version = "0.1.0"
 description = ""
 authors = ["Dominic Eicher <nic.eicher@sunrise.ch>", "Ralph Ursprung <ralph.ursprung@gmail.com>", "Klims Saikins <klims.saikins@cedes.com>"]
 readme = "README.md"
-packages = [{include = "test", from = "src"}]
+packages = [{include = "**/*", from = "src"}]
+exclude = ["src/test"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
