@@ -10,7 +10,12 @@ class Visualizer:
             name (str): The name of the visualization window.
 
         """
-        self.name = name
+
+        self._name = name
+
+    @property
+    def name(self):
+        return self._name
 
     def visualize(self, frame, pattern_list):
         """

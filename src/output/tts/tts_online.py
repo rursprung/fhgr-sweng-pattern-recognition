@@ -19,6 +19,6 @@ class TtsOnline:
         sound.seek(0)
         pygame.mixer.music.load(sound, "mp3")
         pygame.mixer.music.play()
-        while pygame.mixer.music.get_busy():
-            pygame.time.delay(10)
-            pygame.event.poll()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                break
