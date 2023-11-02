@@ -12,29 +12,34 @@ from pattern_processor.pattern_filter import PatternFilter
 
 
 class App(ABC):
+    """
+    Generic implementation of an app which scans an image for patterns.
+    Specific implementations of this class need to implement the `get_next_frame` method
+    to provide
+    """
     def __init__(self, delay=0):
-        self.image_processor = ImageProcessor()
-        self.pattern_filter = PatternFilter()
-        self.loggers = [
+        self._image_processor = ImageProcessor()
+        self._pattern_filter = PatternFilter()
+        self._loggers = [
             ConsolePatternLogger(),
             CsvPatternLogger(),
         ]
-        self.visualizer = Visualizer("Press 'q' to quit")
-        self.tts_patterns = TtsPatterns()
+        self._visualizer = Visualizer("Press 'q' to quit")
+        self._tts_patterns = TtsPatterns()
         self._delay = delay
 
-    def handle_frame(self, frame: cv2.Mat):
-        pattern_list = self.image_processor.process(frame)
+    def handle_frame(self, frame: cv2.Mat) -> None:
+        pattern_list = self._image_processor.process(frame)
 
-        filtered_patterns = self.pattern_filter.set_and_filter_patterns(pattern_list)
+        filtered_patterns = self._pattern_filter.set_and_filter_patterns(pattern_list)
 
-        for logger in self.loggers:
+        for logger in self._loggers:
             logger.log(filtered_patterns)
 
-        self.visualizer.visualize(frame, pattern_list)
-        self.tts_patterns.patterns_to_speech(filtered_patterns)
+        self._visualizer.visualize(frame, pattern_list)
+        self._tts_patterns.patterns_to_speech(filtered_patterns)
 
-    def run(self):
+    def run(self) -> None:
         try:
             while True:
                 frame = self.get_next_frame()

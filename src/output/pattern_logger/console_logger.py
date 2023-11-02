@@ -1,8 +1,9 @@
+from image_proc.image_proc import Pattern
 from output.pattern_logger.pattern_logger import PatternLogger
 
 
 class ConsolePatternLogger(PatternLogger):
-    def log(self, pattern_list):
+    def log(self, pattern_list: list[Pattern]) -> None:
         """
         Logs the patterns to the console.
 
