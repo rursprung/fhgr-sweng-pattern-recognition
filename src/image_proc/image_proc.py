@@ -37,6 +37,10 @@ class Pattern:
     def color(self) -> str:
         return self._color
 
+    @color.setter
+    def color(self, value):
+        self._color = value
+
     def __str__(self) -> str:
         return f"{self.name}: {self.contour}" + f" in {self.color}" if self.color is not None else ""
 
@@ -106,7 +110,6 @@ def _hue_to_color(hue: float) -> str:
     Returns:
         str: The color name corresponding to the hue value.
     """
-    color = ""
     if hue < 10:
         color = "RED"
     elif hue < 22:

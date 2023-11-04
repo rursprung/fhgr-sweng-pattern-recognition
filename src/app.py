@@ -51,7 +51,7 @@ class App(ABC):
 
                 if cv2.waitKey(self._delay) & 0xFF == ord("q"):
                     break
-                if cv2.getWindowProperty(self.visualizer.name, cv2.WND_PROP_VISIBLE) < 1:
+                if cv2.getWindowProperty(self._visualizer.name, cv2.WND_PROP_VISIBLE) < 1:
                     break
 
         except KeyboardInterrupt:
