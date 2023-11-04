@@ -1,5 +1,7 @@
-from output.pattern_logger.pattern_logger import PatternLogger
 import csv
+from datetime import datetime
+
+from output.pattern_logger.pattern_logger import PatternLogger
 
 
 class CsvPatternLogger(PatternLogger):
@@ -10,7 +12,7 @@ class CsvPatternLogger(PatternLogger):
         self._writer = csv.writer(self._file)
 
         # write the header
-        self._writer.writerow(['pattern name', 'pattern color'])
+        self._writer.writerow(['Timestamp', 'Pattern Name', 'Pattern Color'])
 
     def __del__(self):
         self._file.close()
@@ -27,4 +29,4 @@ class CsvPatternLogger(PatternLogger):
         """
 
         for pattern in pattern_list:
-            self._writer.writerow([pattern.name, pattern.color])
+            self._writer.writerow([datetime.now(), pattern.name, pattern.color])
