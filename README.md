@@ -39,16 +39,74 @@ application you can leave away the `poetry run` part of the commands given below
 
 1. To launch the program run `poetry run python -m app_stored_images` in the root of this repository
 2. Press any key to progress to the next image
-   * Note: pressing `q` has the special effect of terminating the program instead
+   * Note: pressing `q` or simply clicking the `close` button has the special effect of terminating the program instead
 3. After the last image the program will terminate
 
 ### Using a Webcam
 
 1. To launch the program run `poetry run python -m app_webcam` in the root of this repository
 2. Enjoy
-3. Press `q` to terminate the program
+3. Press `q` or simply click the `close` button to terminate the program
 
-## Architecture Overview
+## Component Diagram
+
+```mermaid
+    graph TD
+        
+          subgraph Output Processes
+            
+            VIS
+            
+            subgraph Text To Speech 
+              TTS --> TTS_ON[TTS Online]
+              TTS --> TTS_OFF[TTS Offline]  
+            end
+            
+            subgraph Pattern Logger 
+                CSV_L[CSV Logger]
+                CSL[Console Logger]
+            end
+          end
+          
+          subgraph External Libraries
+              CV2
+              Numpy
+              Datetime
+              CSV
+              Pyttsx3
+              gTTS
+              Pygame
+          end
+          
+          APP_IMG --> APP
+          APP_WEB --> APP
+          
+          APP --> IP --> CV2
+          IP --> Numpy
+          
+          APP --> PF
+          
+          APP --> CSV_L
+          CSV_L --> Datetime
+          CSV_L --> CSV
+          APP --> CSL
+          
+          APP --> TTS
+          TTS_OFF --> Pyttsx3
+          TTS_ON --> Pygame
+          TTS_ON --> gTTS
+          
+          APP --> VIS
+          
+          APP[Application]
+          APP_WEB[Application Webcam]
+          APP_IMG[Application Stored Images]
+          PF[Pattern Filter]
+          VIS[Visualizer]
+          IP[Image Processor]
+```
+
+## Runtime View Diagram
 
 ```mermaid
 graph LR
@@ -56,25 +114,21 @@ graph LR
     Video -->|Data|IL
     IL -->|Image|PR
     IL -->|Image|Viz
-    PR -->|"List of Patterns
-    (Location, Shape, Colour)"|Viz
+    PR -->|"List of Patterns <br> (Location, Shape, Colour)"|Viz
     Viz -->|"image with markup"|Screen
 
-    PR -->|"List of Patterns
-    (Location, Shape, Colour)"|PF
-    PF -->|"Filtered List of Patterns (Only New Patterns)"|ConsoleLogger
-    ConsoleLogger-->|"Text
-    (Log Entries)"|Screen
-    PF -->|"Filtered List of Patterns (Only New Patterns)"|CSVLogger
-    CSVLogger -->|"CSV
-    (Log Entries)"|CSVFile
+    PR -->|"List of Patterns <br> (Location, Shape, Colour)"|PF
+    PF -->|"Filtered List of Patterns <br> (Only New Patterns)"|ConsoleLogger
+    ConsoleLogger-->|"Text <br> (Log Entries)"|Screen
+    PF -->|"Filtered List of Patterns <br> (Only New Patterns)"|CSVLogger
+    CSVLogger -->|"CSV <br> (Log Entries)"|CSVFile
     
-    PF -->|"Filtered List of Patterns (Only New Patterns)"|TTS
+    PF -->|"Filtered List of Patterns <br> (Only New Patterns)"|TTS
     TTS -->|"Audio Data"|Audio
     
     IL[Image Loader]
-    Image[JPEG File]
-    Video[Video Data Stream e.g.: WebCamera]
+    Image[[JPEG File]]
+    Video[[Video Data Stream e.g.: WebCamera]]
     Viz[Visualizer]
     PR[Pattern Recognition]
     PF[Pattern Filter]
