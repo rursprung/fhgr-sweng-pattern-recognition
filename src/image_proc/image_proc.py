@@ -38,7 +38,7 @@ class Pattern:
         return self._color
 
     @color.setter
-    def color(self, value):
+    def color(self, value: str) -> None:
         self._color = value
 
     def __str__(self) -> str:
