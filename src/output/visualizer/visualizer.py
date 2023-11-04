@@ -1,8 +1,11 @@
 import cv2
+import numpy as np
+
+from image_proc.image_proc import Pattern
 
 
 class Visualizer:
-    def __init__(self, name):
+    def __init__(self, name: str):
         """
         Initialize a Visualizer object.
 
@@ -10,14 +13,13 @@ class Visualizer:
             name (str): The name of the visualization window.
 
         """
-
         self._name = name
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self._name
 
-    def visualize(self, frame, pattern_list):
+    def visualize(self, frame: np.ndarray, pattern_list: list[Pattern]) -> None:
         """
         Visualizes patterns on a given frame.
 
@@ -40,4 +42,4 @@ class Visualizer:
                 (120, 120, 255),
                 2,
             )
-        cv2.imshow(self.name, frame)
+        cv2.imshow(self._name, frame)

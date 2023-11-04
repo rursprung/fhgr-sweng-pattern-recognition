@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 
+from image_proc.image_proc import Pattern
+
 
 class PatternLogger(ABC):
     @abstractmethod
-    def log(self, pattern_list):
+    def log(self, pattern_list: list[Pattern]) -> None:
         """
         Abstract method to log the patterns.
 

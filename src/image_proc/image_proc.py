@@ -1,10 +1,18 @@
+from __future__ import annotations
+
+from abc import ABC, abstractmethod
+
 import cv2
 import numpy as np
-from abc import ABC, abstractmethod
 
 
 class Pattern:
-    def __init__(self, name, contour):
+    """
+    A pattern which has been identified in an image.
+    The pattern has a name (for the shape), the (approximate) contour where it has been found
+    and the color of the shape.
+    """
+    def __init__(self, name: str, contour: np.ndarray):
         """
         Initialize a Pattern object.
 
@@ -13,14 +21,26 @@ class Pattern:
             contour (numpy.ndarray): The contour representing the pattern.
 
         """
-        self.name = name
-        self.contour = contour
-        self.color = None
+        self._name = name
+        self._contour = contour
+        self._color = None
 
-    def __str__(self):
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @property
+    def contour(self) -> np.ndarray:
+        return self._contour
+
+    @property
+    def color(self) -> str:
+        return self._color
+
+    def __str__(self) -> str:
         return f"{self.name}: {self.contour}" + f" in {self.color}" if self.color is not None else ""
 
-    def __eq__(self, other):
+    def __eq__(self, other: Pattern) -> bool:
         """Compare two Pattern objects"""
         if isinstance(other, Pattern):
             return self.name == other.name \
@@ -31,7 +51,7 @@ class Pattern:
 
 class Detector(ABC):
     @abstractmethod
-    def detect(self, patterns, frame):
+    def detect(self, patterns: list[Pattern], frame: np.ndarray) -> list[Pattern]:
         """
         Abstract method to detect patterns in a given image frame.
 
@@ -60,7 +80,7 @@ class ImageProcessor:
         ]
         self._pattern_color_list = []
 
-    def process(self, frame):
+    def process(self, frame: np.ndarray) -> list[Pattern]:
         """
         Process an image frame using a list of detectors.
 
@@ -76,11 +96,39 @@ class ImageProcessor:
         return self._pattern_color_list
 
 
+def _hue_to_color(hue: float) -> str:
+    """
+    Convert a hue value to a color name.
+
+    Args:
+        hue (float): The hue value to be converted.
+
+    Returns:
+        str: The color name corresponding to the hue value.
+    """
+    color = ""
+    if hue < 10:
+        color = "RED"
+    elif hue < 22:
+        color = "ORANGE"
+    elif hue < 33:
+        color = "YELLOW"
+    elif hue < 78:
+        color = "GREEN"
+    elif hue < 131:
+        color = "BLUE"
+    elif hue < 150:
+        color = "VIOLET"
+    else:
+        color = "RED"
+    return color
+
+
 class ColorDetector(Detector):
     def __init__(self):
         pass
 
-    def detect(self, patterns, frame):
+    def detect(self, patterns: list[Pattern], frame: np.ndarray) -> list[Pattern]:
         """
         Detect the color of patterns in a given image frame.
 
@@ -107,42 +155,15 @@ class ColorDetector(Detector):
             non_zero_hues = hue_channel[hue_channel != 0]
             median_hue = np.median(non_zero_hues)
 
-            pattern.color = self._hue_to_color(median_hue)
+            pattern.color = _hue_to_color(median_hue)
         return patterns
-
-    def _hue_to_color(self, hue):
-        """
-        Convert a hue value to a color name.
-
-        Args:
-            hue (float): The hue value to be converted.
-
-        Returns:
-            str: The color name corresponding to the hue value.
-        """
-        color = ""
-        if hue < 10:
-            color = "RED"
-        elif hue < 22:
-            color = "ORANGE"
-        elif hue < 33:
-            color = "YELLOW"
-        elif hue < 78:
-            color = "GREEN"
-        elif hue < 131:
-            color = "BLUE"
-        elif hue < 150:
-            color = "VIOLET"
-        else:
-            color = "RED"
-        return color
 
 
 class PatternDetector(Detector):
     def __init__(self):
         pass
 
-    def detect(self, patterns, frame):
+    def detect(self, patterns: list[Pattern], frame: np.ndarray) -> list[Pattern]:
         """
         Detect patterns (shapes) in a given image frame.
 
@@ -166,7 +187,6 @@ class PatternDetector(Detector):
             dilated_image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
         )
 
-        approx = None
         patterns.clear()
         for contour in contours:
             epsilon = 0.04 * cv2.arcLength(contour, True)
