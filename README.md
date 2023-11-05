@@ -48,6 +48,16 @@ application you can leave away the `poetry run` part of the commands given below
 2. Enjoy
 3. Press `q` or simply click the `close` button to terminate the program
 
+### Configuration
+
+You can use the `config.toml` file to specify which TTS implementation (if any) is being used and where
+the logfile is being stored.
+
+### Text to Speech
+
+You can switch between an online and an offline version, or you can disable it.
+In the offline version the language depends on the system language, but the text is always in English.
+
 ## Component Diagram
 
 ```mermaid
@@ -80,6 +90,8 @@ application you can leave away the `poetry run` part of the commands given below
           
           APP_IMG --> APP
           APP_WEB --> APP
+          
+          APP --> Config
           
           APP --> IP --> CV2
           IP --> Numpy

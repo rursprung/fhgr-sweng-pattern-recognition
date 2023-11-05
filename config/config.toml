@@ -1,0 +1,8 @@
+# configure 'the text to speech' function:
+# set for off : "DISABLE"
+# for on, provided you have an internet connection (gTTS) : "ONLINE"
+# for on, without an internet connection (pyttsx3): "OFFLINE"
+tts = "ONLINE"
+
+# set the path for the logfile:
+logfile_path = "logfile.csv"
