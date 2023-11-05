@@ -7,8 +7,8 @@ from output.pattern_logger.pattern_logger import PatternLogger
 
 class CsvPatternLogger(PatternLogger):
 
-    def __init__(self):
-        self._file = open('logfile.csv', 'w', encoding='UTF8', newline='')
+    def __init__(self, path: str):
+        self._file = open(path, 'w', encoding='UTF8', newline='')
 
         self._writer = csv.writer(self._file)
 

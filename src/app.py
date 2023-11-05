@@ -3,6 +3,7 @@ from typing import Optional
 
 import cv2
 
+from config import Config
 from image_proc.image_proc import ImageProcessor
 from output.pattern_logger.console_logger import ConsolePatternLogger
 from output.pattern_logger.csv_logger import CsvPatternLogger
@@ -18,14 +19,15 @@ class App(ABC):
     to provide
     """
     def __init__(self, delay=0):
+        self._config = Config()
         self._image_processor = ImageProcessor()
         self._pattern_filter = PatternFilter()
         self._loggers = [
             ConsolePatternLogger(),
-            CsvPatternLogger(),
+            CsvPatternLogger(self._config.logfile_path()),
         ]
         self._visualizer = Visualizer("Press 'q' to quit")
-        self._tts_patterns = TtsPatterns()
+        self._tts_patterns = TtsPatterns(self._config.tts())
         self._delay = delay
 
     def handle_frame(self, frame: cv2.Mat) -> None:
